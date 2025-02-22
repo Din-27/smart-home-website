@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+@theme {
+    --font-noto-sans: "Noto Sans", serif;
+}
+
+html {
+    touch-action: manipulation;
+}
