@@ -19,7 +19,7 @@ const ButtonWrapper = ({
       onClick={props.clickButtonActivate}
       className={`${
         props.activeBox > 0 && props.index === props.activeBox - 1
-          ? "bg-gray-400 text-white"
+          ? "bg-gray-500 text-white"
           : "bg-white text-gray-500"
       } relative w-full p-4 rounded-2xl shadow-lg`}
     >
