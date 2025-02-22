@@ -15,30 +15,32 @@ export type TActiveBox = { index: number; visible: boolean };
 
 const data = {
   lampu: [
-    { label: "Ruang Tamu", image: lamp },
-    { label: "Kamar Depan", image: lamp },
-    { label: "Dapur", image: lamp },
-    { label: "Ruang Tamu", image: lamp },
-    { label: "Kamar Depan", image: lamp },
-    { label: "Dapur", image: lamp },
-    { label: "Ruang Tamu", image: lamp },
-    { label: "Kamar Depan", image: lamp },
-    { label: "Dapur", image: lamp },
-    { label: "Ruang Tamu", image: lamp },
-    { label: "Kamar Depan", image: lamp },
-    { label: "Dapur", image: lamp },
-    { label: "Ruang Tamu", image: lamp },
-    { label: "Kamar Depan", image: lamp },
-    { label: "Dapur", image: lamp },
+    { label: "Ruang Tamu", image: lamp, schedule: true },
+    { label: "Kamar Depan", image: lamp, schedule: false },
+    { label: "Dapur", image: lamp, schedule: false },
+    { label: "Ruang Tamu", image: lamp, schedule: false },
+    { label: "Kamar Depan", image: lamp, schedule: false },
+    { label: "Dapur", image: lamp, schedule: false },
+    { label: "Ruang Tamu", image: lamp, schedule: false },
+    { label: "Kamar Depan", image: lamp, schedule: false },
+    { label: "Dapur", image: lamp, schedule: false },
+    { label: "Ruang Tamu", image: lamp, schedule: false },
+    { label: "Kamar Depan", image: lamp, schedule: false },
+    { label: "Dapur", image: lamp, schedule: false },
+    { label: "Ruang Tamu", image: lamp, schedule: false },
+    { label: "Kamar Depan", image: lamp, schedule: false },
+    { label: "Dapur", image: lamp, schedule: false },
   ],
-  terminal_plug: [{ label: "Colokan Dapur", image: PlugTerminal }],
+  terminal_plug: [
+    { label: "Colokan Dapur", image: PlugTerminal, schedule: true },
+  ],
   air_conditioner: [
-    { label: "Ruang Tamu", image: AirConditioner },
-    { label: "Kamar Depan", image: AirConditioner },
+    { label: "Ruang Tamu", image: AirConditioner, schedule: true },
+    { label: "Kamar Depan", image: AirConditioner, schedule: false },
   ],
   fan: [
-    { label: "Ruang Tamu", image: Fan },
-    { label: "Kamar Depan", image: Fan },
+    { label: "Ruang Tamu", image: Fan, schedule: true },
+    { label: "Kamar Depan", image: Fan, schedule: false },
   ],
 };
 
@@ -96,12 +98,16 @@ function Home() {
             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 lg:gap-6 gap-4">
               {category &&
                 data[labelAktif]?.map(
-                  (item: { label: string; image: string }, index: number) => (
+                  (
+                    item: { label: string; image: string; schedule: boolean },
+                    index: number
+                  ) => (
                     <BoxDevices
                       key={index}
                       index={index}
                       img={item.image}
                       label={item.label}
+                      schedule={item.schedule}
                       activeBox={activeBox.index}
                       clickButtonActivate={() => onClickActivatedBox(index)}
                     />

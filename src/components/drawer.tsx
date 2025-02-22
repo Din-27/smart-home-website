@@ -25,10 +25,10 @@ export default function Drawer({
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      className={`--font-noto-sans text-[#464646] transition duration-300 ease-in-out fixed z-40 w-full border-t bg-white border-gray-400 rounded-t-3xl transition-transform bottom-0 left-0 right-0 
+      className={`--font-noto-sans text-[#464646] transition duration-300 ease-in-out fixed z-40 w-full border-t bg-white border-gray-400 rounded-t-4xl transition-transform bottom-0 left-0 right-0 
           ${
             minimize || swipeDirection
-              ? "translate-y-full bottom-[160px] h-[90vh]"
+              ? "translate-y-full bottom-[60px] h-[90vh]"
               : !minimize && visible
               ? "h-[90vh] overflow-y-auto"
               : "translate-y-full h-[90vh]"

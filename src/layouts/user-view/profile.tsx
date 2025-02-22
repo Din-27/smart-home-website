@@ -19,7 +19,7 @@ export default function Profile(props: { name: string }) {
     <div className="w-12 h-12 border-1 border-gray-400 rounded-full bg-white">
       <div
         onClick={handlerViewDropdown}
-        className="w-full h-full flex justify-center items-center font-bold text-center text-2xl text-gray-400"
+        className="cursor-pointer w-full h-full flex justify-center items-center font-bold text-center text-2xl text-gray-400"
       >
         {props.name[0]}
       </div>
@@ -30,11 +30,11 @@ export default function Profile(props: { name: string }) {
         } bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 right-6 top-20 shadow`}
       >
         <ul
-          className="py-2 text-sm text-gray-700"
+          className="py-2 text-sm text-gray-700 px-2"
           aria-labelledby="dropdownDefaultButton"
         >
           <li onClick={handlerLogout}>
-            <button className="block px-4 py-2 hover:bg-gray-200">
+            <button className="block w-full px-4 py-2 hover:bg-gray-200">
               Logout
             </button>
           </li>
