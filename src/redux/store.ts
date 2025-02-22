@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer, { AuthState } from "./slice/auth";
 import drawerReducer from "./slice/drawer";
+import viewReducer from "./slice/view";
 
 const authPersistConfig = {
   key: "auth",
@@ -13,6 +14,7 @@ const authPersistConfig = {
 export const store = configureStore({
   reducer: {
     drawer: drawerReducer,
+    view: viewReducer,
     auth: persistReducer<AuthState, UnknownAction>(
       authPersistConfig,
       authReducer

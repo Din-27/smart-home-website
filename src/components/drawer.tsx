@@ -37,14 +37,14 @@ export default function Drawer({
       tabIndex={-1}
       aria-labelledby="drawer-swipe-label"
     >
-      <div className="w-full h-8 py-10 cursor-pointer" onClick={clickMinimize}>
+      <div className="w-full py-10 cursor-pointer" onClick={clickMinimize}>
         <div className="cursor-pointer w-18 mx-auto py-[2px] bg-[#464646] mx-4 rounded-full py-4" />
       </div>
-      <label htmlFor="toggle_name">
-        <div
-          className="px-4 py-6 cursor-pointer hover:bg-gray-50"
-          data-drawer-toggle="drawer-swipe"
-        >
+      <div
+        className="px-4 cursor-pointer hover:bg-gray-50"
+        data-drawer-toggle="drawer-swipe"
+      >
+        <label htmlFor="toggle_name">
           <div className="space-y-2 w-full px-4 py-6 flex justify-between">
             <div>
               <h3 className="font-bold text-2xl">Schedule</h3>
@@ -52,8 +52,8 @@ export default function Drawer({
             </div>
             <Toggle toggleName="toggle_name" />
           </div>
-        </div>
-      </label>
+        </label>
+      </div>
       <div className="mx-4 overflow-y-auto space-y-6">{children}</div>
     </div>
   );

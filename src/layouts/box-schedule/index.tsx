@@ -133,8 +133,12 @@ export function BoxSchedule(props: {
         </div>
       </div>
       <div className="w-full px-4 py-6 grid grid-cols-2 gap-x-4">
-        <button className="cursor-pointer font-bold rounded-2xl py-4 text-2xl border border-[#464646] text-[#464646] bg-white">Cleare all</button>
-        <button className="cursor-pointer font-bold rounded-2xl py-4 text-2xl bg-[#464646] text-white">Schedule</button>
+        <button className="cursor-pointer font-bold rounded-2xl py-4 text-2xl border border-[#464646] text-[#464646] bg-white">
+          Cleare all
+        </button>
+        <button className="cursor-pointer font-bold rounded-2xl py-4 text-2xl bg-[#464646] text-white">
+          Schedule
+        </button>
       </div>
     </Drawer>
   );

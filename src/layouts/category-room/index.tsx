@@ -8,13 +8,13 @@ export function CategoryRoom(props: {
   onClickCategory: (label: string) => void;
 }) {
   return (
-    <Swiper slidesPerView={3}>
+    <Swiper slidesPerView={2}>
       <ul className="flex justify-between w-full">
         {props.data.map((x, y) => (
           <SwiperSlide key={y} onClick={() => props.onClickCategory(x.label)}>
-            <li className="pb-2">
+            <li className="pb-2 text-2xl font-semibold uppercase">
               <div
-                className={`text-center font-semibold mb-1 cursor-pointer ${
+                className={`text-center mb-1 cursor-pointer ${
                   x.aktif ? "text-[#464646]" : "text-[#BDBDBD]"
                 }`}
               >
