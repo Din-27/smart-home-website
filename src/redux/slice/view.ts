@@ -3,10 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface ViewState {
   dropdown_user: boolean;
+  modal_form: boolean;
 }
 
 const initialState: ViewState = {
   dropdown_user: false,
+  modal_form: false,
 };
 
 export const viewSlice = createSlice({
@@ -16,10 +18,13 @@ export const viewSlice = createSlice({
     setDropdownUser: (state, action: PayloadAction<boolean>) => {
       state.dropdown_user = action.payload;
     },
+    setModalForm: (state, action: PayloadAction<boolean>) => {
+      state.modal_form = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setDropdownUser } = viewSlice.actions;
+export const { setDropdownUser, setModalForm } = viewSlice.actions;
 
 export default viewSlice.reducer;

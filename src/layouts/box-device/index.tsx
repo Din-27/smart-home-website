@@ -64,7 +64,12 @@ export default function BoxDevices(props: IBoxDevices) {
 
       <div className="my-2 space-y-6">
         <div className="flex justify-between items-center pt-12 px-4">
-          <img className="w-18 h-18" src={props.img} alt={props.img} />
+          <img
+            loading="lazy"
+            className="w-18 h-18"
+            src={props.img}
+            alt={props.img}
+          />
           <Toggle />
         </div>
         <p className="text-center font-bold">{props.label}</p>

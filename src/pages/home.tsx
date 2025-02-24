@@ -7,8 +7,11 @@ import AirConditioner from "../assets/img/air-conditioner.png";
 import Fan from "../assets/img/fan.png";
 import { useGetCategory } from "../hook/category";
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setDropdownUser } from "../redux/slice/view";
+import Adddevice from "../layouts/add-device";
+import ModalForm from "../layouts/modal-form";
+import { RootState } from "../redux/store";
 
 type IData = "lampu" | "terminal_plug" | "air_conditioner" | "fan";
 export type TActiveBox = { index: number; visible: boolean };
@@ -47,6 +50,8 @@ const data = {
 function Home() {
   const dispatch = useDispatch();
   const [activeBox, setActiveBox] = useState({ index: 0, visible: false });
+  const { modal_form } = useSelector((state: RootState) => state.view);
+
   const { category, setCategory } = useGetCategory(data);
   const labelAktif = String(
     category
@@ -95,7 +100,9 @@ function Home() {
             {/* <h2 className="text-2xl font-bold text-gray-500 uppercase mb-2">
               {x}
             </h2> */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 lg:gap-6 gap-4">
+            <div
+              className={`grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 lg:gap-6 gap-4`}
+            >
               {category &&
                 data[labelAktif]?.map(
                   (
@@ -113,6 +120,7 @@ function Home() {
                     />
                   )
                 )}
+              <Adddevice />
             </div>
           </div>
         </div>
@@ -124,6 +132,7 @@ function Home() {
           />
         )}
       </div>
+      {modal_form && <ModalForm data_category={category} />}
     </MobileWrapper>
   );
 }

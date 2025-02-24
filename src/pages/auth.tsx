@@ -32,7 +32,7 @@ export default function Auth() {
   return (
     <div className="relative min-h-screen w-full flex justify-center items-center">
       <div className="flex-2 lg:block hidden">
-        <img src="/img/bagel.png" alt="" />
+        <img loading="lazy" src="/img/bagel.png" alt="" />
       </div>
       <div className="lg:w-1/2 w-2/3">
         <div className="space-y-8 lg:py-0 py-14 lg:px-24 px-0">

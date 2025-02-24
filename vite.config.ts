@@ -5,23 +5,6 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  server: {
-    host: "0.0.0.0", // Izinkan akses dari luar
-    port: 5173, // Port default Vite
-    strictPort: true,
-    cors: true, // Izinkan permintaan lintas domain
-    hmr: {
-      clientPort: 443, // Agar Hot Module Reload (HMR) tetap berfungsi di HTTPS Ngrok
-    },
-    allowedHosts: [
-      "26a1-103-81-221-61.ngrok-free.app", // Ganti dengan domain Ngrok yang diberikan
-    ],
-  },
-  preview: {
-    allowedHosts: [
-      "26a1-103-81-221-61.ngrok-free.app", // Ganti dengan domain Ngrok yang diberikan
-    ],
-  },
   resolve: {
     alias: [{ find: "@", replacement: "/src" }],
   },
