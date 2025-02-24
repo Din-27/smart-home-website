@@ -1,12 +1,15 @@
-import { MouseEventHandler, PropsWithChildren } from "react";
+import { MouseEventHandler, PropsWithChildren, useRef } from "react";
 import Toggle from "../../components/toggle";
+import { useDispatch } from "react-redux";
+import { setDropdownBox } from "../../redux/slice/view";
 
 export type IBoxDevices = {
-  img: string;
-  label: string;
-  index: number;
+  session: string;
+  img?: string;
+  label?: string;
+  index?: number;
   activeBox: number;
-  schedule: boolean;
+  schedule?: boolean;
   clickButtonActivate: MouseEventHandler;
 };
 
@@ -14,8 +17,19 @@ const ButtonWrapper = ({
   children,
   props,
 }: PropsWithChildren<{ props: IBoxDevices }>) => {
+  const dispatch = useDispatch();
+  const holdTimeout = useRef<number | null>(null);
+
+  const handlerHoldBox = () => {
+    holdTimeout.current = setTimeout(() => {
+      dispatch(setDropdownBox(true)); // Trigger after 5 sec
+    }, 2000);
+  };
+
   return (
     <button
+      onTouchStart={handlerHoldBox} // For mobile
+      onMouseDown={handlerHoldBox} // For desktop
       onClick={props.clickButtonActivate}
       className={`${
         props.activeBox > 0 && props.index === props.activeBox - 1
@@ -29,10 +43,9 @@ const ButtonWrapper = ({
 };
 
 export default function BoxDevices(props: IBoxDevices) {
-  return (
+  return props.session === "box_schedule" ? (
     <ButtonWrapper props={props}>
-      {/* <div className="absolute inline-flex items-center justify-center w-24 h-24 text-sm font-bold text-white bg-red-500 border-2 border-white rounded-full -top-4 -end-4"> */}
-      <div className="flex absolute pb-3">
+      <div className="flex justify-between relative pb-3 z-20 w-full">
         <div
           className={`border rounded-full p-1.5 text-white ${
             props.schedule ? "bg-green-500" : "bg-gray-200"
@@ -60,10 +73,9 @@ export default function BoxDevices(props: IBoxDevices) {
           </svg>
         </div>
       </div>
-      {/* </div> */}
 
       <div className="my-2 space-y-6">
-        <div className="flex justify-between items-center pt-12 px-4">
+        <div className="flex justify-between items-center pt-2 px-4">
           <img
             loading="lazy"
             className="w-18 h-18"
@@ -73,6 +85,26 @@ export default function BoxDevices(props: IBoxDevices) {
           <Toggle />
         </div>
         <p className="text-center font-bold">{props.label}</p>
+      </div>
+    </ButtonWrapper>
+  ) : (
+    <ButtonWrapper props={props}>
+      <div className="flex justify-center">
+        <svg
+          className="w-20 h-20"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 18 18"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 1v16M1 9h16"
+          />
+        </svg>
       </div>
     </ButtonWrapper>
   );

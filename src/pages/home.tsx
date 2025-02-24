@@ -5,13 +5,13 @@ import lamp from "../assets/img/lamp.png";
 import PlugTerminal from "../assets/img/energy.png";
 import AirConditioner from "../assets/img/air-conditioner.png";
 import Fan from "../assets/img/fan.png";
-import { useGetCategory } from "../hook/category";
-import { useCallback, useState } from "react";
+import { IUseGetCategoriWithActivated, useGetCategory } from "../hook/category";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setDropdownUser } from "../redux/slice/view";
-import Adddevice from "../layouts/add-device";
+import { setDrawerView, setDropdownUser } from "../redux/slice/view";
 import ModalForm from "../layouts/modal-form";
 import { RootState } from "../redux/store";
+import DrawerProperties from "../layouts/drawer-properties";
 
 type IData = "lampu" | "terminal_plug" | "air_conditioner" | "fan";
 export type TActiveBox = { index: number; visible: boolean };
@@ -49,8 +49,11 @@ const data = {
 
 function Home() {
   const dispatch = useDispatch();
+
   const [activeBox, setActiveBox] = useState({ index: 0, visible: false });
-  const { modal_form } = useSelector((state: RootState) => state.view);
+  const { drawer_view, dropdown_box_devices } = useSelector(
+    (state: RootState) => state.view
+  );
 
   const { category, setCategory } = useGetCategory(data);
   const labelAktif = String(
@@ -71,17 +74,49 @@ function Home() {
     setActiveBox({ index: 0, visible: false });
   };
 
-  const onClickActivatedBox = useCallback((index: number) => {
+  const onClickActivatedBox = (index: number) => {
     const _index = Number(index + 1);
+    dispatch(
+      setDrawerView({
+        name: "add_schedule",
+        view:
+          activeBox.index !== _index ? true : drawer_view.view ? false : true,
+        minimize: false,
+      })
+    );
     setActiveBox((prevState: TActiveBox) => ({
       index: prevState.index === _index ? 0 : _index,
       visible: true,
     }));
-  }, []);
+  };
+
+  const onClickActivatedBoxAddDevice = () => {
+    setActiveBox({
+      index: 0,
+      visible: false,
+    });
+    dispatch(
+      setDrawerView({
+        name: "add_device",
+        view: drawer_view.view && drawer_view.name === "" ? false : true,
+        minimize: false,
+      })
+    );
+  };
 
   const handleCloseState = () => {
     dispatch(setDropdownUser(false));
   };
+
+  useEffect(() => {
+    const disableRightClick = (event: MouseEvent) => event.preventDefault();
+
+    document.addEventListener("contextmenu", disableRightClick);
+
+    return () => {
+      document.removeEventListener("contextmenu", disableRightClick);
+    };
+  }, []);
 
   return (
     <MobileWrapper>
@@ -93,7 +128,11 @@ function Home() {
       <div onClick={handleCloseState}>
         <div
           className={`pt-44 ${
-            activeBox.index > 0 ? "lg:pb-56 pb-56" : "lg:pb-0 pb-10"
+            drawer_view.view
+              ? drawer_view.name === "add_schedule"
+                ? "lg:pb-56 pb-56"
+                : "lg:pb-24 pb-24"
+              : "lg:pb-0 pb-10"
           } bg-[#E5E5E5] min-h-screen`}
         >
           <div className="mx-6">
@@ -110,6 +149,7 @@ function Home() {
                     index: number
                   ) => (
                     <BoxDevices
+                      session="box_schedule"
                       key={index}
                       index={index}
                       img={item.image}
@@ -120,21 +160,43 @@ function Home() {
                     />
                   )
                 )}
-              <Adddevice />
+              <BoxDevices
+                activeBox={1}
+                session="box_add_device"
+                clickButtonActivate={onClickActivatedBoxAddDevice}
+              />
             </div>
           </div>
         </div>
-        {activeBox.index > 0 && (
-          <BoxSchedule
-            activeBox={activeBox}
-            category={labelAktif}
-            data={data[labelAktif][Number(activeBox.index - 1)]}
-          />
-        )}
       </div>
-      {modal_form && <ModalForm data_category={category} />}
+      {!drawer_view.minimize ||
+        (drawer_view.view && (
+          <div className="fixed z-40 left-0 top-0 bg-gray-800 opacity-75 w-full h-screen overflow-hidden" />
+        ))}
+      <RoutingDrawer aktif={drawer_view.name} category={category} />
+      {dropdown_box_devices && (
+        <div className="fixed z-40 left-0 top-0 bg-gray-800 opacity-75 w-full h-screen overflow-hidden" />
+      )}
+      {dropdown_box_devices && <DrawerProperties />}
     </MobileWrapper>
   );
 }
+
+const RoutingDrawer = ({
+  aktif,
+  category,
+}: {
+  aktif: string;
+  category: IUseGetCategoriWithActivated[];
+}) => {
+  console.log(aktif);
+
+  if (aktif === "add_device") {
+    return <ModalForm data_category={category} />;
+  }
+  if (aktif === "add_schedule") {
+    return <BoxSchedule />;
+  }
+};
 
 export default Home;

@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setDrawerView } from "../redux/slice/view";
+import { RootState } from "../redux/store";
 
 export const useGetSlideDown = () => {
-  const [swipeDirection, setSwipeDirection] = useState(false);
+  const dispatch = useDispatch();
+  const { drawer_view } = useSelector((state: RootState) => state.view);
 
   let touchStartY = 0;
   let touchEndY = 0;
@@ -16,14 +19,23 @@ export const useGetSlideDown = () => {
 
   const handleTouchEnd = () => {
     if (touchEndY - touchStartY > 50) {
-      setSwipeDirection(true);
+      dispatch(
+        setDrawerView({
+          ...drawer_view,
+          minimize: false,
+        })
+      );
     } else {
-      setSwipeDirection(false);
+      dispatch(
+        setDrawerView({
+          ...drawer_view,
+          minimize: true,
+        })
+      );
     }
   };
 
   return {
-    swipeDirection,
     handleTouchStart,
     handleTouchMove,
     handleTouchEnd,
